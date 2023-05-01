@@ -9,6 +9,7 @@ notes.get('/', (req, res) => {
   
 notes.post('/', (req, res) => {
 // Destructuring assignment for the items in req.body
+console.log(req.body);
 const { title, text } = req.body;
 
 if (title && text) {
@@ -27,7 +28,7 @@ const response = {
 
 res.json(response);
 } else {
-res.json('Error in posting feedback');
+res.json('Error in posting note');
 }
 });
 

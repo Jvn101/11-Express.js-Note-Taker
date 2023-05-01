@@ -1,17 +1,30 @@
-const router = require('express').Router();
-const fs = require('fs')
-const { v4: uuidv4 } = require('uuid');
+const express = require('express');
 
 // Import our modular routers 
-const apiRoutes = require('../assets/js');
-const homepagehtmlRoutes = require('./index.html')
-const noteshtmlRoutes = require('./notes.html')
+const apiRoutes = require('./notes');
 
 const app = express();
 
-router.use('/api/notes', apiRoutes);
-router.use('/', homepagehtmlRoutes);
-router.use('/api', noteshtmlRoutes);
+app.use('/notes', apiRoutes);
+
+module.exports = app;
+
+
+
+
+//const fs = require('fs')
+//const { v4: uuidv4 } = require('uuid');
+
+// Import our modular routers 
+//const apiRoutes = require('./notes');
+//const homepagehtmlRoutes = require('./index.html')
+//const notes = require('./notes.html')
+
+//const app = express();
+
+//app.use('/notes', apiRoutes);
+//app.use('/', homepagehtmlRoutes);
+//app.use('/api', notes);
 
 
   // GET Route for a specific tip
@@ -27,4 +40,4 @@ router.use('/api', noteshtmlRoutes);
 //       });
 //   });
 
-module.exports = router;
+//module.exports = app;
