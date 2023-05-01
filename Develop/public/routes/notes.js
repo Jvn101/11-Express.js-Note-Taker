@@ -1,10 +1,10 @@
 const notes = require('express').Router();
-const fs = require('fs')
+const { readAndAppend, readFromFile } = require('../helpers/fsUtils');
 const { v4: uuidv4 } = require('uuid');
 
 // GET Route for retrieving all the tips0
 notes.get('/', (req, res) => {
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+    readFromFile('../../db/db.json').then((data) => res.json(JSON.parse(data)));
   });
   
 notes.post('/', (req, res) => {
@@ -19,7 +19,7 @@ const newNotes = {
   id: uuidv4(),
 };
 
-readAndAppend(newNotes, '../db/db.json');
+readAndAppend(newNotes, '../../db/db.json');
 
 const response = {
   status: 'success',
