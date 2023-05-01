@@ -3,8 +3,11 @@ const path = require('path');
 //const fs = require('fs');
 //goes to index.js file in routes
 const api = require('./routes');
-const PORT = process.env.PORT || 3001;
-
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port);
 const app = express();
 
 // Middleware for parsing JSON and urlencoded form data
