@@ -4,15 +4,14 @@ const { v4: uuidv4 } = require('uuid');
 
 // GET Route for retrieving all the currently saved notes
 notes.get('/', (req, res) => {
-  fs.readFile("../db/db.json", "utf-8")
+  const data = fs.readFile("../db/db.json", "utf-8")
   const readData = res.json(JSON.parse(data));
   return readData;
   });
   
 notes.post('/', (req, res) => {
-console.log(req.body);
+//console.log(req.body);
 const { title, text } = req.body;
-
 try {
 const newNotes = {
   title,
@@ -20,25 +19,25 @@ const newNotes = {
   id: uuidv4(),
 };
 
-fs.readFile('../db/db.json', "utf-8")
- 
-  const parsedData = JSON.parse(data);
-  parsedData.push(newNotes);
-
-  
-  fs.writeFile('../db/db.json', JSON.stringify(parsedData, null, 4), (err) =>
+const data = fs.readFile('../db/db.json', "utf-8")
+const parsedData = JSON.parse(data);
+parsedData.push(newNotes);
+// Save new note to the database
+fs.writeFile('../db/db.json', JSON.stringify(parsedData, null, 4), (err) =>
     err ? console.error(err) : console.info(`\nData written to '../db/db.json'`)
   );
-  const response = {
-    status: 'success',
-  };
-  res.json(response);
+  res.json("Your note has been added!");
   } catch (error) {
-      res.json('Error in posting note');
+  res.send('Error in posting note');
     }
   });
   
   module.exports = notes
+
+
+
+
+
 
 
 
