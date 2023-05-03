@@ -1,14 +1,12 @@
 const express = require('express');
 const path = require('path');
-//const fs = require('fs');
-//goes to index.js file in routes
 const api = require('./routes');
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
 }
 const app = express();
-//app.listen(port);
+
 
 // Middleware for parsing JSON and urlencoded form data
 app.use(express.json());
