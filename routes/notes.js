@@ -1,38 +1,61 @@
-const notes = require('express').Router();
+const notes = require("express").Router();
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const readAndAppend = require('./fsUtils');
 
-// GET Route for retrieving all the currently saved notes
+//GET Route for retrieving all the currently saved notes
 notes.get('/', (req, res) => {
-  const data = fs.readFile("../db/db.json", "utf-8")
-  const readData = res.json(JSON.parse(data));
-  return readData;
-  });
+
+  fs.readFile("./db/db.json", "utf-8", (err, file) => {
+    if(err){
+      console.error(err);
+    }
+    else {
+      const parsedData = res.json(JSON.parse(file));
+      console.log(parsedData);
+    }
+  });  
+});
+
   
 notes.post('/', (req, res) => {
-//console.log(req.body);
+
+console.log(req.body);
 const { title, text } = req.body;
-try {
+
+if (req.body) {
 const newNotes = {
   title,
   text,
   id: uuidv4(),
-};
+}
 
-const data = fs.readFile('../db/db.json', "utf-8")
-const parsedData = JSON.parse(data);
-parsedData.push(newNotes);
-// Save new note to the database
-fs.writeFile('../db/db.json', JSON.stringify(parsedData, null, 4), (err) =>
-    err ? console.error(err) : console.info(`\nData written to '../db/db.json'`)
-  );
-  res.json("Your note has been added!");
-  } catch (error) {
-  res.send('Error in posting note');
-    }
-  });
+  readAndAppend(newNotes, "./db/db.json");
+    res.json("Note added");
+  } else {
+    res.error("Error in adding note");
+  }
+});
   
   module.exports = notes
+
+
+
+
+// const data = fs.readFile('./db/db.json', "utf-8")
+// const parsedData = JSON.parse(data);
+// parsedData.push(newNotes);
+
+// //Save new note to the database
+// fs.writeFile('./db/db.json', JSON.stringify(parsedData, null, 4), (err) =>
+//     err ? console.error(err) : console.info(`\nData written to '../db/db.json'`)
+//   );
+//   res.json("Your note has been added!");
+//   } catch (error) {
+//   res.send('Error in posting note');
+//     }
+//   });
+
 
 
 
@@ -71,3 +94,10 @@ fs.writeFile('../db/db.json', JSON.stringify(parsedData, null, 4), (err) =>
 // }
 // });
 
+// req.body.id = uuidv4()
+// fs.readFile("./db/db.json", "utf-8") 
+// data.push(req.body) //data is not defined
+// fs.writeFile('./db/db.json', JSON.stringify(data), (err) => {
+//   if (err) throw err;
+// });
+// res.json(data)
