@@ -17,6 +17,7 @@ To contribute to this project please contact the developer.
 ## Credits
 The project was created with the help of:
 Front-end code created by edX Boot Camps LLC.
+Back-end code (fsUtils and notes.delete request) created by edX Boot Camps LLC.
 
 ***
 ### Contact us
